@@ -8,22 +8,15 @@ def minmax(data):
     max = 0
      
     for j in range(len(data)):
-        print("Index: ", j, ", Value: ", data[j])
         if data[j] == data[min]:
             max = j
             min = j
-            print("1-Max = ", max)
-            print("1-Min = ", min)
 
         elif data[j] < data[min]:
             min = j
-            print("2-Max = ", max)
-            print("2-Min = ", min)
 
         elif data[j] > data[max]:
             max = j
-            print("3-Max = ", max)
-            print("3-Min = ", min)
             
     print("The min number is: ", data[min])
     print("The max number is: ", data[max])
