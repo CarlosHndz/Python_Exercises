@@ -2,4 +2,5 @@
 # Python's comprehension syntax and the built-in sum function.
 
 total = sum(k*k for k in range(1, 20))
+
 print(total)
