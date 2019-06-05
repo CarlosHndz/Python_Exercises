@@ -10,24 +10,42 @@ design your program so that it returns as few bills and coins as possible.
 
 
 def make_change(charge, payment):
-    # Bill denominations: $100, $50, $20, $10, $5, $1
-    # coin demonimations: $0.25, $0.10, $0.05, $0.01
-    bills_coins = (100, 50, 20, 10, 5, 1, 0.25, 0.10, 0.05, 0.01)
+   
+    # NOTE: In order to represent currency properly you
+    # need to use cents as an integer and divide by 100 to convert to dollars.
+    # Using floating point is not accurate to properly represent currency.
+
+    # Currency represented in cents. Divide by 100 to convert to dollars
+    currency = (10000, 5000, 2000, 1000, 500, 100, 25, 10, 5, 1)
+    total_change = 0
     change = {}
-    difference = float(payment) - float(charge)
+    difference = int(payment * 100) - int(charge * 100) #convert to cents
     
-    # while the change is > 0, divide the amount by the possible bills and coins
-    while difference >= 0.1:
-        for m in bills_coins:
-            print("m value = ", float(m))
-            print("Difference value = ", difference)
-            if difference >= float(m):
-                divisor = difference // m
-                difference %=  m
-                change[m] = divisor
-            
-                print(change)
+    # while the change is > 0, divide the amount by the highest possible bill 
+    # and coin denominations
+    while difference >= 1:
+        for value in currency:
+            if difference >= value:
+                change[value] = int(difference // value)
+                difference %=  value
                 
-                
+    # print the charge amount along with the payment and the breakdown of the 
+    # calculated change with the minimum amount of bills/coins possible.        
+    print("")
+    print("Charge amount: $", charge)
+    print("Payment amount: $", payment)
+    print("")
+    print("Your change consists of: ")
     
-make_change(4.01, 10.00)
+    for key, value in change.items():
+        total_change += (key * value)
+        print(value, " x $", (key/100), " = $", ((key * value)/100))
+
+    print("For a total change of: $", (total_change/100))       
+                
+
+# test the function    
+make_change(4.01, 10.00) # $5.99
+make_change(3.45, 20.00) # $16.55
+make_change(16.87, 50.00) # $33.13
+make_change(0.99, 1.00) # $0.01
